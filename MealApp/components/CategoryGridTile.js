@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
 		opacity: 0.5,
 	},
 	title: {
-		fontFamily: "open-sans-bold",
 		fontSize: 22,
 		fontWeight: "bold",
 	},
