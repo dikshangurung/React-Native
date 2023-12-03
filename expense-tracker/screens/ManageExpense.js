@@ -1,9 +1,57 @@
+import { useLayoutEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
-function ManageExpense() {
+import IconButton from "../components/UI/IconButton";
+import { GlobalStyles } from "../constants/styles";
+function ManageExpense({ route, navigation }) {
+	const editedExpenseId = route.params?.expenseId;
+	const isEditing = !!editedExpenseId;
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			title: isEditing ? "Edit Expense" : "Add Expense",
+		});
+	}, [navigation, isEditing]);
+	function deleteExpenseHandler() {}
+	function cancelHandler() {}
 	return (
-		<View>
-			<Text>All Expenses</Text>
+		<View style={styles.container}>
+			<View>
+				<Button mode="flat" onPress={cancelHandler}>
+					Cancel
+				</Button>
+				<Button onPress={confirmHandler}>
+					{isEditing ? "Update" : "Add"}
+				</Button>
+			</View>
+			{isEditing && (
+				<View style={styles.deleteContainer}>
+					<IconButton
+						icon="trash-outline"
+						size={36}
+						color={GlobalStyles.colors.error500}
+						omPress={deleteExpenseHandler}
+					/>
+				</View>
+			)}
 		</View>
 	);
 }
 export default ManageExpense;
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 24,
+		backgroundColor: GlobalStyles.colors.primary800,
+	},
+	buttons: {
+		flexDirection: "row",
+		justifyContent: "space-betweef",
+	},
+	deleteContainer: {
+		marginTop: 24,
+		paddingTop: 8,
+		borderTopWidth: 2,
+		borderTopColor: GlobalStyles.colors.primary200,
+		alignItems: "center",
+	},
+});
